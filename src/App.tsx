@@ -1,6 +1,11 @@
 import { useState } from "react"
-import { ArrowLeft, Check, Copy } from "lucide-react"
+import { Check, Copy } from "lucide-react"
 import { cn } from "@/lib/utils"
+import { PageHeader } from "@/components/page-header"
+import { TldrCard } from "@/components/tldr-card"
+import { Callout } from "@/components/callout"
+import { DataSources } from "@/components/data-sources"
+import { PageFooter } from "@/components/page-footer"
 
 // ─── VDS Color Tokens ────────────────────────────────────────────────────────
 
@@ -174,24 +179,28 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <div
-        aria-hidden
-        className="fixed inset-x-0 top-0 h-64 -z-10 opacity-30 pointer-events-none"
-        style={{ background: "conic-gradient(from 200deg at 40% 0%, oklch(0.65 0.22 200 / 0.5), oklch(0.6 0.22 280 / 0.4), oklch(0.65 0.2 340 / 0.3), transparent)" }}
-      />
       <main className="mx-auto max-w-5xl px-4 md:px-6 py-10">
-        <a href="https://ankush-rustagi.github.io/" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-8">
-          <ArrowLeft className="size-4" />Back to index
-        </a>
+        <PageHeader
+          type="Styling Configurator"
+          title="Verkada HEX Styling Configurator"
+          subtitle="Map Verkada Design System (VDS) colors to Hex.tech customization controls. Review each palette and theme option, then select your preferred configuration for production use."
+          createdDate="May 10, 2026"
+          modifiedDate="May 16, 2026"
+          stats={[
+            { value: 5, label: "chart palettes" },
+            { value: 3, label: "app themes" },
+            { value: 20, label: "max palette colors" },
+          ]}
+          gradient="conic-gradient(from 200deg at 40% 0%, oklch(0.65 0.22 200 / 0.5), oklch(0.6 0.22 280 / 0.4), oklch(0.65 0.2 340 / 0.3), transparent)"
+        />
 
-        <header className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-semibold tracking-tight leading-tight mb-2">
-            Verkada HEX Styling Configurator
-          </h1>
-          <p className="text-muted-foreground max-w-2xl">
-            Map Verkada Design System (VDS) colors to Hex.tech customization controls. Review each palette and theme option, then select your preferred configuration for production use.
-          </p>
-        </header>
+        <TldrCard items={[
+          "HEX supports 20-color chart palettes and per-app themes (font, background, accent). Both are set at the workspace admin level.",
+          "Verkada has 8 product-line colors and 3 status colors — 11 semantic slots that fit cleanly into HEX's 20-slot palette.",
+          "Recommended chart palette: Product Line First — leads with the 8 product hues in semantic order, then extends with tonal variants.",
+          "Recommended theme: Verkada Light or Verkada Dark — both use Open Sans (closest Google Fonts match to TT Norms Pro) and VDS cyan-500 as the accent.",
+          "HEX does not support arbitrary CSS overrides. All styling is confined to the palette and theme controls.",
+        ]} />
 
         <nav className="flex flex-wrap gap-2 mb-8">
           {TABS.map(t => (
@@ -265,9 +274,9 @@ export default function App() {
               </div>
             </div>
 
-            <div className="rounded-lg border border-sky-500/30 bg-sky-500/10 p-4 text-sm text-sky-300">
-              <span className="font-semibold">Note: </span>HEX does not support arbitrary CSS overrides on published apps. All styling is controlled through the theme and palette settings above.
-            </div>
+            <Callout variant="info" title="Note">
+              HEX does not support arbitrary CSS overrides on published apps. All styling is controlled through the theme and palette settings above.
+            </Callout>
           </div>
         )}
 
@@ -308,9 +317,9 @@ export default function App() {
 
             <div className="border-t border-border pt-6">
               <h3 className="text-base font-medium mb-3">Product Line Color Assignments</h3>
-              <div className="rounded-lg border border-sky-500/30 bg-sky-500/10 p-4 text-sm text-sky-300 mb-4">
-                <span className="font-semibold">Changes from v1: </span>Every product line occupies a distinct hue family: cyan, orange, red, gold, green, teal, dark-cyan (camera sub), and violet. No two product lines share a hue band.
-              </div>
+              <Callout variant="info" title="Changes from v1" className="mb-4">
+                Every product line occupies a distinct hue family: cyan, orange, red, gold, green, teal, dark-cyan (camera sub), and violet. No two product lines share a hue band.
+              </Callout>
               <div className="overflow-x-auto rounded-xl border border-border">
                 <table className="w-full text-sm">
                   <thead><tr className="border-b border-border bg-muted/40">{["Product Line", "Token", "Hex Code", "Swatch", "Rationale"].map(h => <th key={h} className="p-3 text-left font-medium text-muted-foreground">{h}</th>)}</tr></thead>
@@ -402,9 +411,9 @@ export default function App() {
               </div>
             ))}
 
-            <div className="rounded-lg border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-300">
-              <span className="font-semibold">TT Norms Pro is not on Google Fonts. </span>Verkada's display typeface is a commercial font not available through Google Fonts. Open Sans (VDS body face) and Nunito Sans (similar geometric sans) are the closest alternatives.
-            </div>
+            <Callout variant="warning" title="TT Norms Pro is not on Google Fonts">
+              Verkada's display typeface is a commercial font not available through Google Fonts. Open Sans (VDS body face) and Nunito Sans (similar geometric sans) are the closest alternatives.
+            </Callout>
           </div>
         )}
 
@@ -460,7 +469,7 @@ export default function App() {
               </div>
             </div>
 
-            <div className="rounded-lg border border-sky-500/30 bg-sky-500/10 p-4 text-sm text-sky-300">
+            <Callout variant="info">
               <div className="font-semibold mb-2">How to apply in HEX</div>
               <ol className="space-y-1">
                 {[
@@ -473,13 +482,21 @@ export default function App() {
                   <li key={i} className="flex gap-2"><span className="shrink-0 font-bold">{i + 1}.</span>{step}</li>
                 ))}
               </ol>
-            </div>
+            </Callout>
           </div>
         )}
 
-        <footer className="mt-20 pt-6 border-t border-border text-xs text-muted-foreground">
-          Ankush Rustagi · Verkada Product · Canvas built 2026-05-10
-        </footer>
+        <DataSources
+          sources={[
+            { label: "Verkada Design System (VDS)", description: "Color tokens, typography, and component specifications sourced from internal VDS documentation." },
+            { label: "HEX.tech Documentation", description: "Styling controls and limitations sourced from HEX Enterprise admin panel and public docs." },
+            { label: "Verkada Brand Guidelines", description: "Product-line color assignments derived from brand guidelines and Command UI design files." },
+          ]}
+          methodology="Colors were extracted directly from VDS token files. Palette ordering was tested for perceptual contrast using hue-separation analysis. Theme values were validated against HEX's accepted format."
+          asOf="May 2026"
+        />
+
+        <PageFooter builtDate="2026-05-10" />
       </main>
     </div>
   )
